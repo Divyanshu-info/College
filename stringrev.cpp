@@ -23,7 +23,7 @@ public:
         char b[Length()+1];
         for (int i = 0; i < Length(); i++)
         {
-            b[Length()-i-1]=str[i];
+            b[Length()-i]=str[i];
         }
         b[Length()+1]='\0';
         cout<<b;
