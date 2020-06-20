@@ -3,14 +3,14 @@
 using namespace std;
 
 
-long int fact(int n){
+long long fact(long long n){
     if(n==1 || n== 0) return 1;
     else return n*fact(n-1);
     }
 
 class Factorial{
-    int n;
-    long int f;
+    long n;
+    long long f;
     public:
     Factorial(){
         cout<< "Enter a Number:";
