@@ -1,62 +1,40 @@
 #include<iostream>
+
 using namespace std;
-int main()
-{
-    int a,b,sum=0;
-    // int m[a][b],n[a][b],c[a][b];
-    cout<<"Enter number of Row : ";
-    cin>>a;
-    cout<<"Enter number of Column : ";
-    cin>>b;
-      int m[a][b],n[a][b],c[a][b];
-    cout<<"\nEnter first matrices \n";
-    for(int i=0;i<a;i++)
-    {
-        for(int j=0;j<b;j++)
-        {
-            cin>>m[i][j];
-        }
-    }
 
-cout<<"\nEnter Second matrices \n";
-    for(int i=0;i<a;i++)
-    {
-        for(int j=0;j<b;j++)
-        {
-            cin>>n[i][j];
-        }
-    }
-    //   for(int i=0;i<a;i++)
-    // {
-    //     for(int j=0;j<b;j++)
-    //     {
-    //         c[i][j]=0;
-    //     }
-    // }
+int main(){
+    int M,N,sum=0;
+    cout<<"Enter number of Row : \t\t";
+    cin>>M;
+    cout<<"Enter number of Column : \t";
+    cin>>N;
 
-    cout<<"Multiplication of two matrices are : ";
-int k;
-    for(int i=0;i<a;i++)
-    {
-        for(int j=0;j<b;j++)
-        {
-            c[i][j]=0;
-            for( k=0;k<b;k++)
-            {
-        c[i][j] +=  m[i][k] * n[k][j];
-        // cout<<c[i][j]<<"\n";
-        
-            }
-           
-            
-        }
-    }
-     for(int i=0;i<a;i++)
-    {
-        for(int j=0;j<b;j++)
-        {
-           cout<<c[i][j]<<"\t";
-        }
-    }
+    int** A = new int*[M];
+
+	// dynamically allocate memory of size N for each row
+	for (int i = 0; i < M; i++)
+		A[i] = new int[N];
+
+	// assign values to allocated memory
+	for (int i = 0; i < M; i++)
+		for (int j = 0; j < N; j++)
+			A[i][j] = rand() % 100;
+
+	// print the 2D array
+	for (int i = 0; i < M; i++)
+	{
+		for (int j = 0; j < N; j++)
+			std::cout << A[i][j] << " ";
+
+		std::cout << std::endl;
+	}
+
+	// deallocate memory using delete[] operator
+	for (int i = 0; i < M; i++)
+		delete[] A[i];
+
+	delete[] A;
+
+	return 0;
 
 }

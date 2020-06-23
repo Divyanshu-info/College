@@ -6,7 +6,7 @@ public:
     string str;
     int n;
     int l;
-    void ip()
+    void input()
     {
 
         cout << "Enter the String ";
@@ -15,7 +15,7 @@ public:
         cin >> n;
         l = str.length();
     }
-    void op()
+    void output()
     {
         //  l=strlen(str);
         int i;
@@ -30,9 +30,10 @@ int main()
 {
     A p;
 
-    p.ip();
+    p.input();
+
     for (int i = p.l - p.n; i < p.l; i++)
     {
-        p.op();
+        p.output();
     }
 }

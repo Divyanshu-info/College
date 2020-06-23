@@ -5,16 +5,23 @@
 using namespace std;
 int main()
 {
-    string c, d;
+    string str1, str2;
 
-    string z;
+    string constr;
     cout << "Enter the first String : ";
-    cin >> c;
+    cin >> str1;
     cout << "Enter the second String : ";
-    cin >> d;
-    if (c!=d)
-        z = c + d;
-    else z=c;
-    transform(z.begin(),z.end(),z.begin(),::tolower);
-    cout << z << endl;
+    cin >> str2;
+
+    transform(str1.begin(), str1.end(), str1.begin(), ::tolower);
+    transform(str2.begin(), str2.end(), str2.begin(), ::tolower);
+
+    if( str1.back() == str2.front() )
+        str1.pop_back();
+        
+        constr = str1 + str2;
+        
+
+    
+    cout << constr << endl;
 }

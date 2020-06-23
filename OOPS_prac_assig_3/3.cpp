@@ -1,14 +1,18 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
-class A
-{
-public:
-    void swap(int *x, int *y)
+
+void swap(int *x, int *y)
     {
         int temp = *x;
         *x = *y;
         *y = temp;
     }
+
+class integer_array{
+public:
+    
+    
+    
     void bubble(int a[], int n)
     {
         int i, j;
@@ -21,29 +25,44 @@ public:
             }
         }
     }
+
+    integer_array(int n){
+        int a[n];
+
+        cout << "Enter the Elements : \n";
+
+        for (int i = 0; i < n; i++)
+        {
+            cin >> a[i];
+        }
+
+        bubble(a, n);
+
+        float sum=0, avg;
+
+        for (int i = 0; i < n; i++)
+        {
+            sum += a[i];
+        } 
+        cout<<endl; 
+        for (int i = 0; i < n; i++)
+        {
+            cout<<a[i]<<" ";
+        }
+        cout<<endl; 
+
+        avg = sum / n;
+
+        cout << "Avg of Array Elements are : ";
+        cout << avg;
+        cin>>n;
+    }
 };
-int main()
-{
-    A p;
+
+int main(){
     int n;
     cout << "Enter the Number of Integer in the Array ";
     cin >> n;
 
-    int a[n];
-
-    cout << "Enter the Elements : ";
-    for (int i = 0; i < n; i++)
-    {
-        cin >> a[i];
-    }
-
-    p.bubble(a, n);
-
-    double avg;
-    for (int i = 0; i < n; i++)
-    {
-        avg += a[i];
-    }
-    cout << "Avg of Array Elements are : ";
-    cout << avg / n;
+    integer_array p(n);
 }

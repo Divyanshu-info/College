@@ -1,68 +1,69 @@
 #include <bits/stdc++.h>
 using namespace std;
-class A
+class Time
 {
 public:
     int h, m, s;
     void get_time()
     {
-        cout << "hours : ";
+        cout << "Enter hours:\t";
         cin >> h;
         while (h > 23)
         {
-            cout << "Hour must be less than 23 \n";
-            cout << "hour : ";
+            cout << "Hours must be between 0 and 23\n";
+            cout << "Enter hours:\t";
             cin >> h;
         }
 
-        cout << "Minutes : ";
+        cout << "Enter Minutes : ";
         cin >> m;
-        cout << "Seconds : ";
+
+        while (m > 59)
+        {
+            cout << "Minutes must be between 0 and 59\n";
+            cout << "Enter Minutes:\t";
+            cin >> m;
+        }
+
+        cout << "Enter Seconds : ";
         cin >> s;
-    }
-    void t()
-    {
-        if (s > 60)
-        {
-            int a = s / 60;
-            s = s % 60;
-            m += a;
-        }
-        if (m > 60)
-        {
 
-            int p = m / 60;
-            m = m % 60;
-            h = h + p;
+        while (s > 59)
+        {
+            cout << "Seconds must be between 0 and 59\n";
+            cout << "Enter Seconds:\t";
+            cin >> s;
         }
     }
 
-    void ge_time()
+    void put_time()
     {
-        cout << "Time" << h << ":" << m << ":" << s;
+        cout << "Time = " << setw(2) << setfill('0') << h
+             << ":" << setw(2) << setfill('0') << m
+             << ":" << setw(2) << setfill('0') << s;
     }
 };
 int main()
 {
-    A n;
+    Time n;
     n.get_time();
-    n.t();
-    n.ge_time();
+    n.put_time();
+
     char a;
-    cout << "Do another y/n";
 
     while (1)
     {
-        cout << "Do another y/n";
+        cout << "\nDo another (y/n)?";
         cin >> a;
         switch (a)
         {
         case 'y':
+        case 'Y':
             n.get_time();
-            n.t();
-            n.ge_time();
+            n.put_time();
             break;
         case 'n':
+        case 'N':
             exit(0);
             break;
         }

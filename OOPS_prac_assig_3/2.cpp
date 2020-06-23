@@ -1,27 +1,28 @@
 #include<iostream>
+
 using namespace std;
+
 class String{
     public:
- String(){
-  string a;
-  cout<<"Enter the String ";
-  cin>>a;
- }
- void b(string c,string d){
-     string p;
-     cout<<"Enter the first String : ";
-     cin>>c;
-     cout<<"Enter the first String : ";
-     cin>>d;
-     p=c+d;
-     cout<<"String after Joining : ";
-     cout<<p;
- }
+    string a;
+    String(){
+    cout<<"Enter the String ";
+    cin>>a;
+    }
+    };
 
-};
+string join(String &c,String &d){
+     
+     string a = c.a;
+     string b = d.a;
+     return a + b; 
+        }
+
 int main()
-{
-    String m;
-    string c,d;
-    m.b(c,d);
+{   
+    String c,d;
+    
+    cout<<join(c,d);
+
+
 }

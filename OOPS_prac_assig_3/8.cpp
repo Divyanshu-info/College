@@ -1,68 +1,114 @@
-#include <iostream>
-using namespace std;
-#define size 4
-int a[size], queue[size];
-class A
-{
-public:
-    int front = -1, rear = -1;
-    void enqueue(int data)
-    {
-        if (rear == size - 1)
-        {
-            cout << "Overflow \n";
-        }
-        if (front == -1)
-        {
-            front = 0;
-        }
-        rear++;
-        queue[rear] = data;
-    }
-    void dequeue()
-    {
-        if (rear == front == -1)
-        {
-            cout << "Underflow \n";
-        }
-        else
-        {
-            front++;
-        }
-    }
-    void display()
-    {
-        for (int i = front; i <= rear; i++)
-        {
-            cout << queue[i] << "\n";
-        }
-    }
-};
-int main()
-{
-    A p;
-    int choice;
+// C++ program to implement a queue using an array 
+#include <bits/stdc++.h> 
+using namespace std; 
 
-    while (1)
+class Queue { 
+    public:
+	int front, rear, capacity; 
+	int* queue; 
+	Queue(int c) 
+	{ 
+		front = rear = 0; 
+		capacity = c; 
+		queue = new int; 
+	} 
+
+	~Queue() { delete[] queue; } 
+
+	void queueEnqueue(int data) 
+	{ 
+		if (capacity == rear) { 
+			printf("\nQueue is full\n"); 
+			return; 
+		} 
+
+		else { 
+			queue[rear] = data; 
+			rear++; 
+		} 
+		return; 
+	} 
+
+	void queueDequeue() 
+	{ 
+		if (front == rear) { 
+			printf("\nQueue is empty\n"); 
+			return; 
+		} 
+
+		else { 
+			for (int i = 0; i < rear - 1; i++) { 
+				queue[i] = queue[i + 1]; 
+			} 
+
+			rear--; 
+		} 
+		return; 
+	} 
+
+
+	void queueDisplay() 
+	{ 
+		int i; 
+		if (front == rear) { 
+			printf("\nQueue is Empty\n"); 
+			return; 
+		} 
+
+
+		for (i = front; i < rear; i++) { 
+			printf(" %d <-- ", queue[i]); 
+		} 
+		return; 
+	} 
+
+
+	void queueFront() 
+	{ 
+		if (front == rear) { 
+			printf("\nQueue is Empty\n"); 
+			return; 
+		} 
+		printf("\nFront Element is: %d", queue[front]); 
+		return; 
+	} 
+}; 
+
+int input(){
+    int n;
+    cin>>n;
+    return n;
+}
+
+int main(void) 
+{   
+    cout<<"Input the size of queue\t";
+    Queue q(input());
+
+    while (true)
     {
-        cout << "Enter the operation to be performed : ";
-        cin >> choice;
-        switch (choice)
+        cout<<"\n1. Enqueue\n2. Dequeue\n3. Display Queue\n4. Front Element\n5. Exit\t";
+        switch (input())
         {
         case 1:
-            cout << "Enter the data ";
-            int data;
-            cin >> data;
-            p.enqueue(data);
+            cout<<"\nInput number\t";
+            q.queueEnqueue(input());
             break;
         case 2:
-            p.dequeue();
+            q.queueDequeue();
             break;
         case 3:
-            p.display();
+            q.queueDisplay();
             break;
         case 4:
-            exit(0);
+            q.queueFront();
+            break;
+        case 5:
+            return 0;
+        default:
+            cout<<"\nInvalid Choice\n";
+            break;
         }
     }
-}
+
+} 
