@@ -17,8 +17,6 @@ int main()
 		outer_counter++;
 		caller_counter();
 		std::cout << "\nMain counter value : " << outer_counter << std::endl;
-		std::cout << "\nfunction counter value : " << counter << std::endl
-				  << endl;
 		std::cout << "\ninput z to continue any other key to exit" << std::endl;
 
 		cin >> c;
@@ -31,4 +29,5 @@ int main()
 void caller_counter(void)
 {
 	counter++;
+	cout << "\nI have been called " << counter << " times\n";
 }

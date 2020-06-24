@@ -25,5 +25,4 @@ void caller_counter(void)
 
 	static int inner_counter = 0;
 	inner_counter++;
-	cout << "I have been called " << inner_counter << " times";
 }
