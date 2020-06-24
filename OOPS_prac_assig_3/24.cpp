@@ -1,12 +1,12 @@
 #include <iostream>
 using namespace std;
-void addarrays(int *a, int *b, int *c)
+void addarrays(float *a, float *b, float *c, int num)
 {
-    int *i = a;
-    int *j = b;
-    int *k = c;
-    int ctr = 0;
-    while (ctr < 5)
+    float *i = a;
+    float *j = b;
+    float *k = c;
+    float ctr = 0;
+    while (ctr < num)
     {
         *k = *i + *j;
         i++;
@@ -18,10 +18,11 @@ void addarrays(int *a, int *b, int *c)
 }
 int main()
 {
-    int a[5] = {1, 2, 3, 4, 5};
-    int b[5] = {6, 7, 8, 9, 10};
-    int c[5];
-    addarrays(a, b, c);
-    for (int i = 0; i < 5; i++)
+    int num = 5;
+    float a[num] = {1.1, 2.2, 3.2, 4.4, 5.4};
+    float b[num] = {6.5, 7.6, 8.7, 9.7, 10.9};
+    float c[num];
+    addarrays(a, b, c, num);
+    for (int i = 0; i < num; i++)
         cout << c[i] << ' ';
 }

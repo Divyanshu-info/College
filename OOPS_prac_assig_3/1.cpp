@@ -1,15 +1,16 @@
-#include<iostream>
+#include <iostream>
 
 using namespace std;
 
-int main(){
-    int M,N,sum=0;
-    cout<<"Enter number of Row : \t\t";
-    cin>>M;
-    cout<<"Enter number of Column : \t";
-    cin>>N;
+int main()
+{
+	int M, N, sum = 0;
+	cout << "Enter number of Row : \t\t";
+	cin >> M;
+	cout << "Enter number of Column : \t";
+	cin >> N;
 
-    int** A = new int*[M];
+	int **A = new int *[M];
 
 	// dynamically allocate memory of size N for each row
 	for (int i = 0; i < M; i++)
@@ -36,5 +37,4 @@ int main(){
 	delete[] A;
 
 	return 0;
-
 }
