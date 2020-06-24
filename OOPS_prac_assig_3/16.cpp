@@ -10,14 +10,10 @@ private:
 public:
     void getdata(void)
     {
-        string t;
-        float p;
         cout << "Enter title of publication: ";
-        cin >> t;
+        cin >> title;
         cout << "Enter price of publication: ";
-        cin >> p;
-        title = t;
-        price = p;
+        cin >> price;
     }
     void putdata(void)
     {
@@ -25,6 +21,7 @@ public:
         cout << "Publication price: " << price << endl;
     }
 };
+
 class book : public publication
 {
 private:
@@ -33,32 +30,33 @@ private:
 public:
     void getdata(void)
     {
-        publication::getdata();            //call publication class function to get data
-        cout << "Enter Book Page Count: "; //Acquire book data from user
+        publication::getdata();
+        cout << "Enter Book Page Count: ";
         cin >> pagecount;
     }
     void putdata(void)
     {
-        publication::putdata();                           //Show Publication data
-        cout << "Book page count: " << pagecount << endl; //Show book data
+        publication::putdata();
+        cout << "Book page count: " << pagecount << endl;
     }
 };
+
 class tape : public publication
 {
 private:
-    float ptime;
+    float playtime;
 
 public:
     void getdata(void)
     {
         publication::getdata();
         cout << "Enter tap's playing time: ";
-        cin >> ptime;
+        cin >> playtime;
     }
     void putdata(void)
     {
         publication::putdata();
-        cout << "Tap's playing time: " << ptime << endl;
+        cout << "Tap's playing time: " << playtime << endl;
     }
 };
 int main()

@@ -19,15 +19,15 @@ int main()
 {
 
 	char mystr[80];
-	char c='c';
+	char c;
 	do
 	{
 		cout << "Enter a string: ";
 		cin >> mystr;
 		reversit(mystr);
 		cout << mystr;
-		cout << "\n\n !Press c to continue or any key to exit." << endl
+		cout << "\n\nInput 0 to exit or any key to continue." << endl
 			 << endl;
-			 cin>>c;
-	} while (c == 'c');
+		cin >> c;
+	} while (c != '0');
 }

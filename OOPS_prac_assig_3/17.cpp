@@ -1,11 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct Queue
+class Queue
 {
+public:
 	stack<int> s1, s2;
 
-	void enQueue(int x)
+	void put(int x)
 	{
 
 		while (!s1.empty())
@@ -23,7 +24,7 @@ struct Queue
 		}
 	}
 
-	int deQueue()
+	int get()
 	{
 
 		if (s1.empty())
@@ -41,13 +42,13 @@ struct Queue
 int main()
 {
 	Queue q;
-	q.enQueue(1);
-	q.enQueue(2);
-	q.enQueue(3);
+	q.put(1);
+	q.put(2);
+	q.put(3);
 
-	cout << q.deQueue() << '\n';
-	cout << q.deQueue() << '\n';
-	cout << q.deQueue() << '\n';
+	cout << q.get() << '\n';
+	cout << q.get() << '\n';
+	cout << q.get() << '\n';
 
 	return 0;
 }

@@ -10,7 +10,7 @@ public:
         *y = temp;
     }
 
-    void bubbleSort(double arr[], int n)
+    void Sort(double arr[], int n)
     {
         int i, j;
         for (i = 0; i < n - 1; i++)
@@ -40,7 +40,7 @@ int main()
     {
         cin >> arr[i];
     }
-    p.bubbleSort(arr, n);
+    p.Sort(arr, n);
     cout << "Sorted array: \n";
     p.printArray(arr, n);
 }

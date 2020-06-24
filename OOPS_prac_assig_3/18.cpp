@@ -1,7 +1,3 @@
-// matrix m1(3, 4);	//define a matrix object
-// int temp = 12345;	//define an int value
-// m1.putel(7, 4, temp);	//insert value of temp into matrix at 7 ,4
-// temp = m1.getel(7, 4);	//obtain value from matrix at 7 ,4
 #include <bits/stdc++.h>
 using namespace std;
 class Matrix
@@ -11,29 +7,77 @@ private:
 	int matrix[10][10];
 
 public:
-	Matrix(int numRows = 10, int numColumns = 10)
+	Matrix(int numRows, int numColumns)
 	{
-		rows = numRows;
-		columns = numColumns;
+		rows = numRows - 1;
+		columns = numColumns - 1;
 	}
 	void putel(int i, int j, int temp)
 	{
-		matrix[i][j]=temp;
+		if (check(i - 1, j - 1) == false)
+		{
+			cout << "Invalid input";
+		}
+		else
+			matrix[i - 1][j - 1] = temp;
 	}
-	int getel(int i,int j)
+	int getel(int i, int j)
 	{
-		return matrix[i][j];
+		if (check(i - 1, j - 1) == false)
+		{
+			cout << "Invalid input";
+		}
+		else
+			return matrix[i - 1][j - 1];
+		return 0;
+	}
+
+	bool check(int i, int j)
+	{
+		if (i > rows || j > rows)
+		{
+			return false;
+		}
+		else if (i < 0 || j < 0)
+		{
+			return false;
+		}
+		else
+			return true;
 	}
 };
 
 int main()
 {
-	Matrix m1(2, 4);
-	int temp = 12345;
-	// int xy;
-	m1.putel(7, 4, temp);
-	temp = m1.getel(7, 4);
-	// cin >> xy;
-	cout<<temp;
-	return 0;
+	int a, b;
+	cout << "Input the dimensions of matrix\n";
+	cin >> a >> b;
+
+	Matrix m1(a, b);
+	int c, temp;
+	while (true)
+	{
+		cout << "1. Insert\n";
+		cout << "2. Display\n";
+		cout << "3. Exit\n";
+		cin >> c;
+		switch (c)
+		{
+		case 1:
+			cout << "Input the coordinates of element and value\n";
+			cin >> a >> b >> temp;
+			m1.putel(a, b, temp);
+			break;
+		case 2:
+			cout << "Input the coordinates of element\n";
+			cin >> a >> b;
+			cout << endl
+				 << m1.getel(a, b) << endl;
+			break;
+		case 3:
+			return 0;
+		default:
+			break;
+		}
+	}
 }
