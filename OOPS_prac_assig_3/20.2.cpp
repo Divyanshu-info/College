@@ -8,7 +8,7 @@ int main()
 {
 
 	int outer_counter = 0;
-	int c;
+	char c;
 	do
 	{
 		outer_counter++;
@@ -23,7 +23,7 @@ int main()
 void caller_counter(void)
 {
 
-	int inner_counter = 0;
+	static int inner_counter = 0;
 	inner_counter++;
 	cout << "I have been called " << inner_counter << " times";
 }

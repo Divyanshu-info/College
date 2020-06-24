@@ -10,29 +10,25 @@ int main()
 {
 
 	int outer_counter = 0;
-	int c;
+	char c;
+
 	while (true)
 	{
 		outer_counter++;
 		caller_counter();
-		cout << "\nThe main programme counter value is: " << outer_counter;
-		cout << "\n\nInput 0 to continue or any key to exit." << endl
-			 << endl;
-		cin >> c;
-		switch (c)
-		{
-		case 'z':
-			continue;
-			break;
+		std::cout << "\nMain counter value : " << outer_counter << std::endl;
+		std::cout << "\nfunction counter value : " << counter << std::endl
+				  << endl;
+		std::cout << "\ninput z to continue any other key to exit" << std::endl;
 
-		default:
+		cin >> c;
+
+		if (c != 'z')
 			return 0;
-		}
 	}
 }
 
 void caller_counter(void)
 {
 	counter++;
-	cout << "I have been called " << counter << " times";
 }
