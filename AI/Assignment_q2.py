@@ -16,4 +16,4 @@ elif no == 0:
 else:
     factorial = fac(no)
 
-print("Factorial is :\t{}".format(factorial))
+print(f"Factorial is :\t{factorial}")
