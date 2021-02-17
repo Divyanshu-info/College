@@ -1,3 +1,5 @@
+import random
+
 num = int(input("Enter no. "))
 
 if num > 1:
