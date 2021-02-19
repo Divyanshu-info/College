@@ -1,81 +1,83 @@
 // C++ program of above implementation
 #include <iostream>
-using namespace std;
+#include <chrono>
 
-// structure is used to return
-// two values from minMax()
-struct Pair
+using namespace std;
+using namespace std::chrono;
+
+class Pair
 {
+public:
     int min;
     int max;
 };
 
-struct Pair getMinMax(int arr[], int low,
-                      int high)
+Pair get_Min_Max(int arr[], int low_index, int high_index)
 {
-    struct Pair minmax, mml, mmr;
-    int mid;
+    Pair minmax, Left_part, Right_part;
+    int middle_index;
 
-    // If there is only one element
-    if (low == high)
+    if (low_index == high_index)
     {
-        minmax.max = arr[low];
-        minmax.min = arr[low];
+        minmax.max = arr[low_index];
+        minmax.min = arr[low_index];
         return minmax;
     }
 
-    // If there are two elements
-    if (high == low + 1)
+    if (high_index == low_index + 1)
     {
-        if (arr[low] > arr[high])
+        if (arr[low_index] > arr[high_index])
         {
-            minmax.max = arr[low];
-            minmax.min = arr[high];
+            minmax.max = arr[low_index];
+            minmax.min = arr[high_index];
         }
         else
         {
-            minmax.max = arr[high];
-            minmax.min = arr[low];
+            minmax.max = arr[high_index];
+            minmax.min = arr[low_index];
         }
         return minmax;
     }
 
-    // If there are more than 2 elements
-    mid = (low + high) / 2;
-    mml = getMinMax(arr, low, mid);
-    mmr = getMinMax(arr, mid + 1, high);
+    middle_index = (low_index + high_index) / 2;
+    Left_part = get_Min_Max(arr, low_index, middle_index);
+    Right_part = get_Min_Max(arr, middle_index + 1, high_index);
 
-    // Compare minimums of two parts
-    if (mml.min < mmr.min)
-        minmax.min = mml.min;
+    if (Left_part.min < Right_part.min)
+        minmax.min = Left_part.min;
     else
-        minmax.min = mmr.min;
+        minmax.min = Right_part.min;
 
-    // Compare maximums of two parts
-    if (mml.max > mmr.max)
-        minmax.max = mml.max;
+    if (Left_part.max > Right_part.max)
+        minmax.max = Left_part.max;
     else
-        minmax.max = mmr.max;
+        minmax.max = Right_part.max;
 
     return minmax;
 }
 
-// Driver code
 int main()
 {
-    int arr[] = {1000, 11, 445,
-                 1, 330, 3000};
-    int arr_size = 6;
+    srand(time(0));
+    int arr[16] = {};
+    for (int i = 0; i < 16; i++)
+    {
+        arr[i] = rand() % 100;
+        cout << arr[i] << ' ';
+    }
+    cout << endl;
+    int arr_size = sizeof(arr) / sizeof(arr[0]);
 
-    struct Pair minmax = getMinMax(arr, 0,
-                                   arr_size - 1);
+    auto start = high_resolution_clock::now();
 
-    cout << "Minimum element is "
-         << minmax.min << endl;
-    cout << "Maximum element is "
-         << minmax.max;
+    Pair minmax = get_Min_Max(arr, 0, arr_size - 1);
 
+    auto stop = high_resolution_clock::now();
+    
+    auto duration = duration_cast<nanoseconds>(stop - start);
+
+    cout << "Minimum element is " << minmax.min << endl;
+    cout << "Maximum element is " << minmax.max << endl;
+    cout << "Time taken by function: " << duration.count() << " nanoseconds" << endl;
     return 0;
 }
-
-// This code is contributed by nik_3112
