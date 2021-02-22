@@ -4,7 +4,7 @@ using namespace std;
 
 int MAXSIZE = 8;
 int stack[8];
-int Top = -1;a
+int Top = -1;
 
 int isEmpty()
 {
