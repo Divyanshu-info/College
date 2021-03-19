@@ -1,3 +1,4 @@
-import numpy as np
-
-print(np.__version__)
+a = 1
+print(hex(id(a)))
+a += 1
+print(hex(id(a)))

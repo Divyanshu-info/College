@@ -4,7 +4,6 @@ def fac(no):
     else:
         return fac(no-1)*no
 
-
 no = int(input("Input No.\t"))
 factorial = None
 
