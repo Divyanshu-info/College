@@ -1,50 +1,48 @@
-import threading as th
-import time
-
-class P(th.Thread):
-    running = True 
-
-    def __init__(self, n, Lfork, Rfork):
-        th.Thread.__init__(self)
-        self.index = n
-        self.forkOnLeft = Lfork
-        self.forkOnRight = Rfork
-
-    def run(self):
-        while(self.running):
-            time.sleep(2)
-            print (f"Philosopher {self.index} is hungry.\n", end="")
-            self.dine()
-
-    def dine(self):
-        fork1, fork2 = self.forkOnLeft, self.forkOnRight
-        while self.running:
-            fork1.acquire()
-            locked = fork2.acquire(False) 
-            if locked: break
-            fork1.release()
-            fork1, fork2 = fork2, fork1
-        else:
-            return
-        self.dining()
-        fork2.release()
-        fork1.release()
- 
-    def dining(self):			
-        print (f'Philosopher {self.index} starts eating. \n', end="")
-        time.sleep(1)
-        print (f'Philosopher {self.index} finishes eating and leaves to think.\n', end="")
-
 def main():
-    forks = [th.Semaphore() for _ in range(5)] 
-    philosophers= [P(i, forks[i%5], forks[(i+1)%5]) for i in range(5)]
+    processes = int(input("number of processes : "))
+    resources = int(input("number of resources : "))
+    max_resources = [int(i) for i in input("maximum resources : ").split()]
 
-    P.running = True
-    for p in philosophers: p.start()
-    time.sleep(10)
-    P.running = False
-    print ("We're about to Finish.")
- 
+    print("\n-- allocated resources for each process --")
+    currently_allocated = [[int(i) for i in input(f"process {j + 1} : ").split()] for j in range(processes)]
 
-if __name__ == "__main__":
+    print("\n-- maximum resources for each process --")
+    max_need = [[int(i) for i in input(f"process {j + 1} : ").split()] for j in range(processes)]
+
+    allocated = [0] * resources
+    for i in range(processes):
+        for j in range(resources):
+            allocated[j] += currently_allocated[i][j]
+    print(f"\ntotal allocated resources : {allocated}")
+
+    available = [max_resources[i] - allocated[i] for i in range(resources)]
+    print(f"total available resources : {available}\n")
+
+    running = [True] * processes
+    count = processes
+    while count != 0:
+        safe = False
+        for i in range(processes):
+            if running[i]:
+                executing = True
+                for j in range(resources):
+                    if max_need[i][j] - currently_allocated[i][j] > available[j]:
+                        executing = False
+                        break
+                if executing:
+                    print(f"process {i + 1} is executing")
+                    running[i] = False
+                    count -= 1
+                    safe = True
+                    for j in range(resources):
+                        available[j] += currently_allocated[i][j]
+                    break
+        if not safe:
+            print("the processes are in an unsafe state.")
+            break
+
+        print(f"the process is in a safe state.\navailable resources : {available}\n")
+
+
+if __name__ == '__main__':
     main()
