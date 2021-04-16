@@ -1,24 +1,26 @@
-graph = {'A': [['B', 4], ['C', 2], ['D',3]],
-         'B': [['E', 4],['F',2], ['G',3]],
-         'C': [['H',4], ['I',2], ['J',3]],
-         'D': [['K',1], ["L",2], ["M",3]],
-         'E': [['N',1],['O',2], ['P',3]],
-         'F': [['Q',3]],
-         'G': [['R',3]],
-         'H': [["S",2]]}
+from collections import Counter
+import random
 
-visited = set()
+def process(a, value):
+    duplicate_dict = Counter(a)
+    maxx = max(duplicate_dict.items(), key=lambda x : x[1])
+    print(maxx)
+    a.pop(0)
+    a.append(value)
+    return maxx, a
 
-def dfs(visited, graph, node):
-    
-    if node not in visited:
-        print (node, end=' ')
-        visited.add(node)
-        neighbours = graph.get(node, [])
-        for neighbour in neighbours:
-            dfs(visited, graph, neighbour)
+value = 1
+a = [5, 1, 3, 0, 2, 1, 5, 0,
+ 5, 1, 2, 2, 1, 0, 2, 5, 3,
+  0, 0, 0, 4, 2, 3, 5, 0, 3,
+   5, 4, 1, 2, 2, 5, 5, 5, 3,
+    1, 2, 2, 3, 0, 3, 2, 5, 0,
+     2, 2, 3, 3, 3, 4, 2, 1, 4,
+      5, 1, 0, 2, 0, 5, 4, 0, 2,
+       4, 4, 0, 4, 1, 3, 4, 4, 4,
+        3, 2, 4, 3, 4, 1, 0, 0, 0,
+         5, 0, 3, 5, 3, 4, 1, 5, 2,
+          0, 0, 4, 1, 4, 3, 0, 3, 4,
+           2, 3]
 
-#dfs(visited, graph, 'A')
-#print()
-
-print(graph)
+maxx, a = process(a,value)

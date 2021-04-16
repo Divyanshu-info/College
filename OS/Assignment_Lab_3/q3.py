@@ -41,7 +41,7 @@ def main():
 
     P.running = True
     for p in philosophers: p.start()
-    time.sleep(10)
+    time.sleep(5)
     P.running = False
     print ("We're about to Finish.")
  
