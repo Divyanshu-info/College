@@ -1,7 +1,5 @@
-import tkinter as tk
+print( 'Recurive Function')
+def factorial(n):
+    return(n*factorial(n-1))
 
-r = tk.Tk()
-r.title('Counting Seconds')
-button = tk.Button(r, text='Stop', width=25, command=r.destroy)
-button.pack()
-r.mainloop()
+factorial(4)

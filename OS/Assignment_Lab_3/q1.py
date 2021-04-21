@@ -42,4 +42,4 @@ for i in range(100):
 	thread2.start()
 	thread2.join()
 print("\033[2J\rExecution completed\n")
-print("\r")
+print("\n")
