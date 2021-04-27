@@ -244,10 +244,10 @@ inline lld** Strassen(lld** a, lld** b, int n,
 	delete[] p; 
 
 	return c; 
-} 
+}
 
-int main() 
-{ 
+int main() {
+  vector<int> v;
 	lld** matA; 
 	matA = new lld*[2]; 
 	for (int i = 0; i < 2; i++) 

@@ -5,7 +5,7 @@ def palindrome(s):
         return palindrome(s[1:-1])
     else:
         return False
-
+n = list()
 
 a = input("Enter string: ")
 if len(a) < 1:

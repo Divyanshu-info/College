@@ -21,6 +21,9 @@ int main(int argc, char *args[])
 {
   int num_philosophers = 5;
 
+
+
+  
   sem_t lock;
   sem_t forks[num_philosophers];
   pthread_t philosophers[num_philosophers];
