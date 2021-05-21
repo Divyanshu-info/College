@@ -64,13 +64,25 @@ while True:
         img=cv2.absdiff(back_gray,frame_gray)
 
         _,img=cv2.threshold(img,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+        
         con,hie=cv2.findContours(img,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         img2=img.copy()
-        
+        img3 = img.copy()
+        con2 = con[0]
         con=max(con,key=cv2.contourArea)
-        conv_hull=cv2.convexHull(con)
+        conv_hull=cv2.convexHull(con2)
+        # hull = cv2.convexHull(con2, returnPoints=False)
+        # defects = cv2.convexityDefects(con2, hull)
+
+        # for i in range(defects.shape[0]):
+        #     s, e, f, d = defects[i, 0]
+        #     start = tuple(con2[s][0])
+        #     end = tuple(con2[e][0])
+        #     far = tuple(con2[f][0])
+        #     cv2.line(img3, start, end, [0, 255, 0], 2)
+        #     cv2.circle(img3, far, 5, [0, 0, 255], -1)
+            
         cv2.drawContours(img,[conv_hull],-1,225,3)
-        
         top=tuple(conv_hull[conv_hull[:,:,1].argmin()][0])
         bottom=tuple(conv_hull[conv_hull[:,:,1].argmax()][0])
         left=tuple(conv_hull[conv_hull[:,:,0].argmin()][0])
@@ -104,7 +116,8 @@ while True:
         cv2.putText(frame,'count: '+str(count),(460,70),cv2.FONT_HERSHEY_SIMPLEX ,1,(0,250,0),thickness=4)
         cv2.putText(frame,'Command: '+str(count2),(70,460),cv2.FONT_HERSHEY_SIMPLEX ,1,(250,0,0),thickness=4)
         cv2.rectangle(frame,(x,y),(x+w,y+h),255,3)
-        cv2.imshow('mask',mask)
+        cv2.imshow('img', img3)
+        cv2.imshow('mask', mask)
         cv2.imshow('frame',frame)
         cv2.imshow('weight',wighted)
         

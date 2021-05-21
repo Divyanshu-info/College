@@ -1,141 +1,64 @@
-#include <bits/stdc++.h> 
-using namespace std; 
-  
-struct Process { 
-    int pid; 
-    int bt; 
-    int art; 
-}; 
-  
+#include <stdio.h>
+#define inf 999999
 
-void findWaitingTime(Process proc[],int n,int wt[]) 
+/*
+** Program to find minimum no. of multiplications required to find product of n matrices using Dynamic Programming
+** Made by - Abhishek Chand
+*/
+
+long int D[41] = { 100, 50, 10, 15, 25, 20, 40, 30, 20, 50, 100, 15, 20, 25, 45, 75, 65, 5, 25, 15, 100, 50, 15, 25, 20, 40, 35, 35, 45, 25, 25, 20, 5, 5, 20, 25, 15, 35, 40, 100, 20 };
+long int M[41][41], S[41][41];
+
+void MatChainMult(int n)
 {
-    int rt[n]; 
-    for (int i = 0; i < n; i++) 
-        rt[i] = proc[i].bt; 
-  
-       int complete = 0, t = 0, minm = INT_MAX; 
-    int shortest = 0, finish_time; 
-     bool check = false; 
-  
-    while (complete != n) { 
-  
-   
-        for (int j = 0; j < n; j++) { 
-            if ((proc[j].art <= t) && 
-             (rt[j] < minm) && rt[j] > 0) { 
-                 minm = rt[j]; 
-                shortest = j; 
-                 check = true; 
-            } 
-         } 
-  
-        if (check == false) { 
-             t++; 
-			 
-            continue; 
-        } 
-  
-       
-        rt[shortest]--; 
-  
-        
-        minm = rt[shortest]; 
-        if (minm == 0) 
-             minm = INT_MAX; 
-  
-       
-        if (rt[shortest] == 0) { 
-  
-            
-            complete++; 
-             check = false; 
-  
-           
-            finish_time = t + 1; 
-  
-            
-            wt[shortest] = finish_time - 
-                         proc[shortest].bt - 
-                        proc[shortest].art; 
-  
-            if (wt[shortest] < 0) 
-                 wt[shortest] = 0; 
-         } 
-       
-          t++; 
-      } 
- } 
-  
+    int i, j, k, l;
+    long int q;
+    for (l = 2; l <= n; l++) {
+        for (i = 1; i <= (n - l + 1); i++) {
+            j = i + l - 1;
+            for (k = i; k < j; k++) {
+                q = M[i][k] + M[k + 1][j] + D[i - 1] * D[k] * D[j];
+                if (q < M[i][j]) {
+                    M[i][j] = q;
+                    S[i][j] = k;
+                }
+            }
+        }
+    }
+}
 
-void findTurnAroundTime(Process proc[],int n,int wt[],int tat[]) 
-{ 
-   
-     for (int i = 0; i < n; i++) 
-         tat[i] = proc[i].bt + wt[i]; 
- } 
-  
+void SplitPrint(int i, int j)
+{
+    if (i == j)
+        printf("A%d", i);
+    else {
+        printf("(");
+        SplitPrint(i, S[i][j]);
+        SplitPrint(S[i][j] + 1, j);
+        printf(")");
+    }
+}
 
-void findavgTime(Process proc[],int n) 
-{ 
-    int wt[n],tat[n],total_wt = 0, 
-                    total_tat = 0; 
-					
-    findWaitingTime(proc,n,wt); 
-  
-    findTurnAroundTime(proc,n,wt,tat); 
- 
-    cout << "Processes "
-        << " Burst time "
-        << " Waiting time "
-        << " Turn around time\n"; 
-  
-    for (int i = 0; i < n; i++) { 
-         total_wt = total_wt + wt[i]; 
-        total_tat = total_tat + tat[i]; 
-       cout<< " " << proc[i].pid << "\t\t"
-             << proc[i].bt << "\t\t " << wt[i] 
-              << "\t\t " << tat[i] << endl; 
-     } 
-  
-     cout<<"\nAverage waiting time = "
-        <<(float)total_wt / (float)n; 
-    cout<<"\nAverage turn around time = "
-         <<(float)total_tat / (float)n; 
-} 
+int main()
+{
+    int i, j, n;
+    long int ans;
+    printf("Enter the no. of matrices:");
+    scanf("%d", &n);
+    for (i = 1; i <= n; i++) {
+        for (j = 1; j <= n; j++) {
+            if (i == j)
+                M[i][j] = 0;
+            else
+                M[i][j] = inf;
 
- int main() 
- { 
-int xx;
-cout<<"Please enter the number of processes: ";	
-cin>>xx;
-Process proc[xx];
-cout<<"Please entet the Process id followed by Arival time followed by Burst time , with an space in b/w respectively.\n";
-for(int i=0;i<xx;i++){
-	cin>>proc[i].pid;
-	cin>>proc[i].art;
-	cin>>proc[i].bt;
-	
-}	
-	cout<<endl;
-	cout<<endl;	
-	cout<<"************************** INPUT IS AS FOLLOWS **************************";	
-    cout<<endl;		   
-cout<<"P.id\tArival\tBurst time";
-	cout<<endl;
-for(int i=0;i<xx;i++){
-	cout<<proc[i].pid<<"\t"<<proc[i].art<<"\t"<<proc[i].bt;
-	cout<<endl;
-}	    
-	
-	cout<<endl;
-	cout<<endl;
-	cout<<endl;
-	cout<<"************************** OUTPUT IS AS FOLLOWS **************************";
-	 cout<<endl;
-cout<<endl;
-    int n = sizeof(proc) / sizeof(proc[0]); 
-  
-    findavgTime(proc, n); 
-    return 0; 
-} 
+            S[i][j] = 0;
+        }
+    }
+
+    MatChainMult(n);
+    printf("\nMinimum no. of multiplications = %ld", M[1][n]);
+    printf("\n");
+    SplitPrint(1, n);
+    return 0;
+}
