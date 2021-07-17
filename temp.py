@@ -1,26 +1,38 @@
-import csv
-remaining_money = 0
-invested_money = 0
-no_of_shares = 0
-pivot = 318
-shares = list()
-diff = list()
-profit = list()
-with open('/home/divyanshu/Downloads/SBIN.NS.csv') as csv_file:
-    no_of_shares = 0
-    csv_reader = csv.reader(csv_file, delimiter=',')
-    for row in csv_reader:
-        try:
-            money_i_have = 3000
-            curr_value = int(float(row[-3]))
-            money_i_have +=remaining_money
-            no_of_shares_i_can_buy = money_i_have // curr_value
-            no_of_shares += no_of_shares_i_can_buy
-            remaining_money = money_i_have % curr_value
-            invested_money += no_of_shares_i_can_buy * curr_value
-            shares.append(no_of_shares_i_can_buy)
-            diff.append((pivot - curr_value))
-            profit.append(no_of_shares_i_can_buy* (pivot-curr_value))
-        except:
-            pass
-    print(sum(profit))
+import sqlite3
+
+conn = sqlite3.connect('emaildb.sqlite')
+cur = conn.cursor()
+
+cur.execute('DROP TABLE IF EXISTS Counts')
+
+cur.execute('''
+CREATE TABLE Counts (domain TEXT, count INTEGER)''')
+
+fname = input('Enter file name: ')
+if (len(fname) < 1):
+    fname = 'mbox.txt'
+fh = open(fname)
+for line in fh:
+    if not line.startswith('From: '):
+        continue
+    pieces = line.split()
+    email = pieces[1]
+    name, domain = email.split("@")
+
+    cur.execute('SELECT count FROM Counts WHERE domain = ? ', (domain,))
+    row = cur.fetchone()
+    if row is None:
+        cur.execute('''INSERT INTO Counts (domain, count)
+                VALUES (?, 1)''', (domain,))
+    else:
+        cur.execute('UPDATE Counts SET count = count + 1 WHERE domain = ?',
+                    (domain,))
+    conn.commit()
+
+# https://www.sqlite.org/lang_select.html
+sqlstr = 'SELECT domain, count FROM Counts ORDER BY count DESC LIMIT 10'
+
+for row in cur.execute(sqlstr):
+    print(str(row[0]), row[1])
+
+cur.close()
