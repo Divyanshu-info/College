@@ -1,38 +1,43 @@
-import sqlite3
+from OpenGL.GL import *
+from OpenGL.GLUT import *
+from OpenGL.GLU import *
 
-conn = sqlite3.connect('emaildb.sqlite')
-cur = conn.cursor()
+w, h = 500, 500
 
-cur.execute('DROP TABLE IF EXISTS Counts')
 
-cur.execute('''
-CREATE TABLE Counts (domain TEXT, count INTEGER)''')
+def square():
+    glBegin(GL_QUADS)
+    glVertex2f(100, 100)
+    glVertex2f(300, 100)
+    glVertex2f(200, 200)
+    glVertex2f(100, 200)
+    glEnd()
 
-fname = input('Enter file name: ')
-if (len(fname) < 1):
-    fname = 'mbox.txt'
-fh = open(fname)
-for line in fh:
-    if not line.startswith('From: '):
-        continue
-    pieces = line.split()
-    email = pieces[1]
-    name, domain = email.split("@")
 
-    cur.execute('SELECT count FROM Counts WHERE domain = ? ', (domain,))
-    row = cur.fetchone()
-    if row is None:
-        cur.execute('''INSERT INTO Counts (domain, count)
-                VALUES (?, 1)''', (domain,))
-    else:
-        cur.execute('UPDATE Counts SET count = count + 1 WHERE domain = ?',
-                    (domain,))
-    conn.commit()
+def iterate():
+    glViewport(0, 0, 500, 500)
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity()
+    glOrtho(0.0, 500, 0.0, 500, 0.0, 1.0)
+    glMatrixMode(GL_MODELVIEW)
+    glLoadIdentity()
 
-# https://www.sqlite.org/lang_select.html
-sqlstr = 'SELECT domain, count FROM Counts ORDER BY count DESC LIMIT 10'
 
-for row in cur.execute(sqlstr):
-    print(str(row[0]), row[1])
+def showScreen():
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+    glLoadIdentity()
+    iterate()
+    glColor3f(1.0, 0.0, 3.0)
+    square()
+    glutSwapBuffers()
 
-cur.close()
+
+
+glutInit()
+glutInitDisplayMode(GLUT_RGBA)
+glutInitWindowSize(500, 500)
+glutInitWindowPosition(0, 0)
+wind = glutCreateWindow("OpenGL Coding Practice")
+glutDisplayFunc(showScreen)
+glutIdleFunc(showScreen)
+glutMainLoop()
