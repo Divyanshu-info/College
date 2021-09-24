@@ -1,19 +1,64 @@
-import urllib.request
-import urllib.parse
-import urllib.error
-from bs4 import BeautifulSoup
-import os
+import pygame
+from pygame.locals import *
 
-url = "https://github.com/ryanoasis/nerd-fonts/releases/tag/v2.1.0"
-html = urllib.request.urlopen(url).read()
-soup = BeautifulSoup(html, 'html.parser')
+from OpenGL.GL import *
+from OpenGL.GLU import *
 
-# Retrieve all of the anchor tags
-lst = list()
-tags = soup('a')
-for tag in tags:
-    temp = tag.get('href', None)
-    if temp.startswith("/ryanoasis/nerd-fonts/releases/download/v2.1.0/"):
-        lst.append("https://github.com" + temp)
-for i in lst:
-    os.system("wget "+i)
+verticies = (
+    (1, -1, -1),
+    (1, 1, -1),
+    (-1, 1, -1),
+    (-1, -1, -1),
+    (1, -1, 1),
+    (1, 1, 1),
+    (-1, -1, 1),
+    (-1, 1, 1)
+)
+
+edges = (
+    (0, 1),
+    (0, 3),
+    (0, 4),
+    (2, 1),
+    (2, 3),
+    (2, 7),
+    (6, 3),
+    (6, 4),
+    (6, 7),
+    (5, 1),
+    (5, 4),
+    (5, 7)
+)
+
+
+def Cube():
+    glBegin(GL_LINES)
+    for edge in edges:
+        for vertex in edge:
+            glVertex3fv(verticies[vertex])
+    glEnd()
+
+
+def main():
+    pygame.init()
+    display = (800, 600)
+    pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
+
+    gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
+
+    glTranslatef(0.0, 0.0, -5)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        glRotatef(1, 3, 1, 1)
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        Cube()
+        pygame.display.flip()
+        pygame.time.wait(10)
+
+
+main()
