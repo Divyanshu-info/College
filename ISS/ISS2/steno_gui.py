@@ -53,31 +53,23 @@ def UploadAction2(TEntry1, TLabel3, text):
 
 
 def encode_gui(TEntry1, TEntry2, TEntry3, TEntry4):
-    print(str(TEntry1.get()), str(TEntry3.get()),
-          str(TEntry2.get()), str(TEntry4.get()))
-    code = steno.Encode(str(TEntry1.get()), str(
-        TEntry3.get()), str(TEntry2.get()), str(TEntry4.get()))
+    code = steno.Encode(TEntry1.get(), 
+        TEntry3.get(), TEntry2.get(), TEntry4.get())
     if code == 0:
-        print("Image Encoded Successfully")
         messagebox.showinfo(
             "showinfo", "Image Encoded Successfully", parent=root_encode)
     elif code == 1:
-        print("ERROR: Need larger file size")
         messagebox.showerror(
             "showinfo", "ERROR: Need larger file size", parent=root_encode)
     pass
 
 
 def decode_gui(TEntry1, TEntry2):
-    print(type(TEntry1.get()))
-    print(str(TEntry1.get()), str(TEntry2.get()))
-    code = steno.Decode(str(TEntry1.get()), str(TEntry2.get()))
+    code = steno.Decode(TEntry1.get(), TEntry2.get())
     if code == 1:
-        print("No Hidden Message Found")
         messagebox.showerror(
             "showinfo", "No Hidden Message Found", parent=root_decode)
     else:
-        print("Hidden Message is : " + code)
         messagebox.showinfo(
             "showinfo", "Hidden Message is : " + code, parent=root_decode)
 
@@ -110,7 +102,7 @@ class Toplevel_main:
         top.minsize(1, 1)
         top.maxsize(1351, 738)
         top.resizable(1,  1)
-        top.title("New Toplevel")
+        top.title("Image Steganography")
 
         self.TFrame1_main = ttk.Frame(top)
         self.TFrame1_main.place(relx=0.017, rely=0.022,
@@ -154,7 +146,7 @@ class Toplevel_encode:
         top.minsize(1, 1)
         top.maxsize(1351, 738)
         top.resizable(1,  1)
-        top.title("New Toplevel")
+        top.title("Encode Image")
         top.configure(highlightcolor="black")
 
         self.TFrame1_encode = ttk.Frame(top)
@@ -269,7 +261,7 @@ class Toplevel_decode:
         top.minsize(1, 1)
         top.maxsize(1351, 738)
         top.resizable(1,  1)
-        top.title("New Toplevel")
+        top.title("Decode Image")
 
         self.TFrame1_decode = ttk.Frame(top)
         self.TFrame1_decode.place(relx=0.017, rely=0.022,

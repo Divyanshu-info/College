@@ -1,14 +1,12 @@
 import numpy as np
 from PIL import Image
-import ntpath
-ntpath.basename("a/b/c")
+
 
 def image_mode(mode):
     if mode == 'RGB':
         return 3
     elif mode == 'RGBA':
         return 4
-
 
 def encode_array(image_array, binary_message, req_pixels, total_pixels):
     index = 0
@@ -38,6 +36,10 @@ def encode_pixel(value1, value2):
 def Encode(src, message, dest, key):
 
     img = Image.open(src, 'r')
+    
+    if img.format != "PNG":
+        return 2        
+    
     width, height = img.size
     image_array = np.array(list(img.getdata()))
     total_pixels = width*height
@@ -104,28 +106,24 @@ def Decode(src, key):
     else:
         return decoded_message_text[0:end]
 
-
-def path_leaf(path):
-    head, tail = ntpath.split(path)
-    return tail or ntpath.basename(head)
-
 def main2():
 
-    print(path_leaf("/home/divyanshu/Documents/Programming/College/ISS/2.png"))
-
     key = "123"
-    code = Encode("1.png", "Divyanshu"*10, "2.png", key)
+    code = Encode("1.png", "Divyanshu"*11, "2.png", key)
     
     if code == 0:
         print("Image Encoded Successfully")
     elif code == 1:
         print("ERROR: Need larger file size")
+    elif code == 2:
+        print("ERROR: Not a png file")
 
-    code = Decode(
-        "/home/divyanshu/Documents/Programming/College/ISS/encoded_1.png", key)
+    code = Decode("2.png", key)
     
     if code == 1:
         print("No Hidden Message Found")
     else:
         print("Hidden Message is : " + code)
     pass
+
+main2()
