@@ -45,7 +45,7 @@ def UploadAction2(TEntry1, TLabel3, text):
     TEntry1.insert('end', text)
     img = Image.open(text)
 
-    img.thumbnail((558, 271), Image.ANTIALIAS)
+    img.thumbnail((558, 311), Image.ANTIALIAS)
     img = ImageTk.PhotoImage(img)
 
     TLabel3.configure(image=img)
@@ -317,7 +317,7 @@ class Toplevel_decode:
         self.TLabel3_decode.configure(relief="flat")
         self.TLabel3_decode.configure(anchor='w')
         self.TLabel3_decode.configure(justify='left')
-        self.TLabel3_decode.configure(text='''Tlabel''')
+        self.TLabel3_decode.configure(text='''''')
 
         self.TButton2_decode = ttk.Button(self.TFrame1_decode)
         self.TButton2_decode.place(relx=0.427, rely=0.919, height=30, width=83)
@@ -354,4 +354,3 @@ def start_gui_decode():
 def main():
     start_gui()
 
-main()

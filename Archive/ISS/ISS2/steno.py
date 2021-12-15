@@ -45,7 +45,6 @@ def Encode(src, message, dest, key):
     total_pixels = width*height
     message += key
     binary_message = ''.join([format(ord(i), "08b") for i in message])
-
     req_pixels = len(binary_message)
     if req_pixels > total_pixels*3:
         return 1
@@ -72,6 +71,7 @@ def extract_last_bit(array, total_pixels):
 
 
 def eight_bit_pattern(encoded_hidden_message):
+    
     eight_bit_combined = []
     for i in range(0, len(encoded_hidden_message), 8):
         eight_bit_combined += ["".join(encoded_hidden_message[i:i+8])]
@@ -99,7 +99,6 @@ def Decode(src, key):
     eight_bit_combined = eight_bit_pattern(encoded_hidden_message)
     binary_hidden_message = list(map(str, eight_bit_combined))
     decoded_message_text = decoded_message(binary_hidden_message)
-
     end = decoded_message_text.find(key)
     if end == -1:
         return 1
