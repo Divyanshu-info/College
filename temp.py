@@ -1,43 +1,58 @@
-from OpenGL.GL import *
-from OpenGL.GLUT import *
-from OpenGL.GLU import *
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.fft import fft, fftfreq
 
-w, h = 500, 500
+#Carrier wave c(t)=A_c*cos(2*pi*f_c*t)
+#Modulating wave m(t)=A_m*cos(2*pi*f_m*t)
+#Modulated wave s(t)=A_c[1+mu*cos(2*pi*f_m*t)]cos(2*pi*f_c*t)
 
+# A_c = float(input('Enter carrier amplitude: '))
+# f_c = float(input('Enter carrier frequency: '))
+# A_m = float(input('Enter message amplitude: '))
+# f_m = float(input('Enter message frequency: '))
+#modulation_index = float(input('Enter modulation index: ') )
 
-def square():
-    glBegin(GL_QUADS)
-    glVertex2f(100, 100)
-    glVertex2f(300, 100)
-    glVertex2f(200, 200)
-    glVertex2f(100, 200)
-    glEnd()
+N = 1000
 
+A_c = float(5)
+f_c = float(100000000)
+A_m = float(0.25)
+f_m = float(50)
+modulation_index = float(1.5)
 
-def iterate():
-    glViewport(0, 0, 500, 500)
-    glMatrixMode(GL_PROJECTION)
-    glLoadIdentity()
-    glOrtho(0.0, 500, 0.0, 500, 0.0, 1.0)
-    glMatrixMode(GL_MODELVIEW)
-    glLoadIdentity()
+t = np.linspace(0, 1, N)
 
+carrier = A_c*np.cos(2*np.pi*f_c*t)
+modulator = A_m*np.cos(2*np.pi*f_m*t)
+product = A_c*(1+modulation_index*np.cos(2*np.pi*f_m*t))*np.cos(2*np.pi*f_c*t)
 
-def showScreen():
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-    glLoadIdentity()
-    iterate()
-    glColor3f(1.0, 0.0, 3.0)
-    square()
-    glutSwapBuffers()
+yf = fft(product)
+xf = fftfreq(N, 1/1000)[:N//2]
 
+plt.subplot(4, 1, 1)
+plt.title('Amplitude Modulation')
+plt.plot(modulator, 'g')
+plt.ylabel('Amplitude')
+plt.xlabel('Message signal')
 
+plt.subplot(4, 1, 2)
+plt.plot(carrier, 'r')
+plt.ylabel('Amplitude')
+plt.xlabel('Carrier signal')
 
-glutInit()
-glutInitDisplayMode(GLUT_RGBA)
-glutInitWindowSize(500, 500)
-glutInitWindowPosition(0, 0)
-wind = glutCreateWindow("OpenGL Coding Practice")
-glutDisplayFunc(showScreen)
-glutIdleFunc(showScreen)
-glutMainLoop()
+plt.subplot(4, 1, 3)
+plt.plot(product, color="purple")
+plt.ylabel('Amplitude')
+plt.xlabel('AM signal')
+
+plt.subplot(4, 1, 4)
+plt.plot(xf, 2.0/N * np.abs(yf[0:N//2]), color="purple")
+plt.ylabel('Power')
+plt.xlabel('Frequency')
+
+plt.subplots_adjust(hspace=1)
+plt.rc('font', size=15)
+fig = plt.gcf()
+fig.set_size_inches(16, 12)
+
+fig.savefig('Amplitude Modulation.png', dpi=100)
