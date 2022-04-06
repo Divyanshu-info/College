@@ -1,11 +1,27 @@
-def comb(m, n):
-    res = 1 
-    for i in range(1, n + 1):
-        res *= m - n + i 
-        res /= i 
-    return res
-
-
-n, l, k = int(input()), input().split(), int(input()) 
-pos, x = comb(n, k), sum([1 for i in l if i == "a"]) 
-print("%.4f" % ((pos - comb(n - x, k)) / pos))
+n1 = int(input())
+arr = []
+for i in range(n1):
+    n, m = map(int, input().split())
+    arr = []
+    for j in range(n):
+        arr.append(list(map(int, input().split())))
+        print(arr)
+    if n == 1 and m == 1:
+        print("YES")
+    else:
+        i1 = 0
+        i2 = 0
+        a = arr[i1][i2]
+        while True:
+            if i1 == n-1 and i2 == m-1:
+                print("YES")
+            if arr[i1+1][i2] ==  a:
+                i1+=1
+                continue
+            elif arr[i1][i2+1] == a:
+                i2+=1
+                continue
+            else:
+                print("NO")
+                break
+                
