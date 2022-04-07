@@ -1,0 +1,5 @@
+from re import A
+import numpy as np
+
+a = np.arange(0, 1000, 1)
+print(a)
